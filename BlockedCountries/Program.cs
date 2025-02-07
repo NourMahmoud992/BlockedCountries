@@ -1,6 +1,7 @@
 using BlockedCountries.Helpers;
 using BlockedCountries.Repositories;
 using BlockedCountries.Services;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +23,14 @@ builder.Services.AddScoped<IpGeolocationService>();
 builder.Services.AddScoped<BlockedCountryService>();
 builder.Services.AddScoped<BlockedAttempService>();
 
-
-
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+	// Load XML Comments
+	var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+	var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+	options.IncludeXmlComments(xmlPath);
+});
 var app = builder.Build();
 
 

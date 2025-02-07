@@ -80,7 +80,12 @@ public class BlockedCountriesController : ControllerBase
 			return BadRequest(new { message = ex.Message });
 		}
 	}
-
+	/// <summary>
+	/// This method is used to block a country for a specified period of time
+	/// </summary>
+	/// <param name="CountryCode">Country Code ex:"EG"</param>
+	/// <param name="DurationMinutes">The duration to be blocked in minutes</param>
+	/// <returns> Ok with the country code and duration if success, Conflict if the company already blocked, BadRequest with the error</returns>
 	[HttpPost("temporal-block")]
 	public async Task<IActionResult> TemporarilyBlockCountry([FromQuery] string CountryCode, int DurationMinutes )
 	{
