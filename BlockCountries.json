@@ -1,0 +1,203 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "BlockedCountries",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/countries/block": {
+      "post": {
+        "tags": [
+          "BlockedCountries"
+        ],
+        "summary": "Use This Method to Block a Country",
+        "parameters": [
+          {
+            "name": "countryCode",
+            "in": "query",
+            "description": "This is the country code ex:\"EG\"",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/countries/block/{countryCode}": {
+      "delete": {
+        "tags": [
+          "BlockedCountries"
+        ],
+        "summary": "Use This Method to un-block a country",
+        "parameters": [
+          {
+            "name": "countryCode",
+            "in": "path",
+            "description": "This is the country code ex:\"EG\"",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/countries/blocked": {
+      "get": {
+        "tags": [
+          "BlockedCountries"
+        ],
+        "summary": "This Method is used to return a list of the blocked countries.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The Page Needed to be returned",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The page size",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "filter to the country codes",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/countries/temporal-block": {
+      "post": {
+        "tags": [
+          "BlockedCountries"
+        ],
+        "summary": "This method is used to block a country for a specified period of time",
+        "parameters": [
+          {
+            "name": "CountryCode",
+            "in": "query",
+            "description": "Country Code ex:\"EG\"",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DurationMinutes",
+            "in": "query",
+            "description": "The duration to be blocked in minutes",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ip/lookup": {
+      "get": {
+        "tags": [
+          "IP"
+        ],
+        "summary": "This Method is used to get a country information using an ipAddress",
+        "parameters": [
+          {
+            "name": "ipAddress",
+            "in": "query",
+            "description": "The Ip address needed to get the country info.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ip/check-block": {
+      "get": {
+        "tags": [
+          "IP"
+        ],
+        "summary": "this action takes the ip address automatically from the request and checks if the country is blocked or not",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/logs/blocked-attempts": {
+      "get": {
+        "tags": [
+          "Logs"
+        ],
+        "summary": "This Method is used to return a list of the check attempts.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The Page Needed to be returned",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The page size",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": { }
+}
