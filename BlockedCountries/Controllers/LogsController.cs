@@ -22,8 +22,16 @@ namespace BlockedCountries.Controllers
 		[HttpGet("blocked-attempts")]
 		public IActionResult GetBlockedCountries([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
 		{
-			var attempts = blockedAttempService.GetBlockedAttempts(page, pageSize);
-			return Ok(new { page, pageSize, results = attempts });
+			try
+			{
+
+				var attempts = blockedAttempService.GetBlockedAttempts(page, pageSize);
+				return Ok(new { page, pageSize, results = attempts });
+			}
+			catch(Exception ex)
+			{
+				return BadRequest(new { message = ex.Message });
+			}
 		}
 
 	}

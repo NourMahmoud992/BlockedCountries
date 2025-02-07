@@ -69,8 +69,16 @@ public class BlockedCountriesController : ControllerBase
 	[HttpGet("blocked")]
 	public IActionResult GetBlockedCountries([FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] string? filter = null)
 	{
-		var countries = blockedCountryService.GetBlockedCountries(page, pageSize, filter);
-		return Ok(new { page, pageSize, results = countries });
+		try
+		{
+
+			var countries = blockedCountryService.GetBlockedCountries(page, pageSize, filter);
+			return Ok(new { page, pageSize, results = countries });
+		}
+		catch (Exception ex)
+		{
+			return BadRequest(new { message = ex.Message });
+		}
 	}
 
 	[HttpPost("temporal-block")]
@@ -85,7 +93,7 @@ public class BlockedCountriesController : ControllerBase
 				return BadRequest(new { message = "Duration must be between 1 and 1440 minutes." });
 			}
 
-			if (!(await IsValidCountryCode(CountryCode)))
+			if (!IsValidCountryCode(CountryCode))
 			{
 				return BadRequest(new { message = "Invalid country code." });
 			}
@@ -104,7 +112,7 @@ public class BlockedCountriesController : ControllerBase
 		}
 	}
 
-	private async Task<bool> IsValidCountryCode(string countryCode)
+	private bool IsValidCountryCode(string countryCode)
 	{
 		return options.CountryCodes.Contains(countryCode);
 	}
